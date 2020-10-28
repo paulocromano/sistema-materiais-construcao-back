@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import trabalho.lp.cliente.enums.PerfilCliente
 ;
+import trabalho.lp.cliente.repository.ClienteRepository;
 import trabalho.lp.compra.pedido.model.Pedido;
+import trabalho.lp.exception.service.ObjectNotFoundException;
+import trabalho.lp.utils.Converter;
 @Entity
 @Table(name = "cliente")
 public class Cliente {
@@ -52,6 +56,26 @@ public class Cliente {
 	@JsonIgnore
 	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
 	private List<Pedido> pedidos = new ArrayList<>();
+	
+	
+	public Cliente() {
+		
+	}
+
+	/**
+	 * Construtor de Cliente
+	 * @param nome : String
+	 * @param email : String
+	 * @param dataNascimento : String
+	 * @param senha : String
+	 */
+	public Cliente(String nome, String email, String dataNascimento, String senha) {
+		this.nome = nome;
+		this.email = email;
+		adicionarPerfil(PerfilCliente.CLIENTE);
+		this.dataNascimento = Converter.stringParaLocalDate(dataNascimento);
+		this.senha = senha;
+	}
 
 	
 	public Long getId() {
@@ -106,12 +130,28 @@ public class Cliente {
 		return pedidos;
 	}
 	
-	public void adicionarPerfis(PerfilCliente perfil) {
+	public void adicionarPerfil(PerfilCliente perfil) {
 		this.perfis.add(perfil.getCodigo());
 	}
 	
 	public void adicionarPedido(Pedido pedido) {
 		pedidos.add(pedido);
+	}
+	
+	/**
+	 * Método responsável por verificar se o Cliente existe
+	 * @param clienteRepository : ClienteRepository
+	 * @param id : Long
+	 * @return Cliente - Caso o cliente exista
+	 */
+	public static final Cliente existeCliente(ClienteRepository clienteRepository, Long id) {
+		Optional<Cliente> cliente = clienteRepository.findById(id);
+		
+		if (cliente.isEmpty()) {
+			throw new ObjectNotFoundException("Cliente não encontrado!");
+		}
+		
+		return cliente.get();
 	}
 	
 	
