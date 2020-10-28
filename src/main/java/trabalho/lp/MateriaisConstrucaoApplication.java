@@ -1,0 +1,13 @@
+package trabalho.lp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class MateriaisConstrucaoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MateriaisConstrucaoApplication.class, args);
+	}
+
+}
