@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import trabalho.lp.cliente.enums.PerfilCliente
 ;
 import trabalho.lp.cliente.repository.ClienteRepository;
-import trabalho.lp.compra.pedido.model.Pedido;
+import trabalho.lp.compra.model.Compra;
 import trabalho.lp.exception.service.ObjectNotFoundException;
 import trabalho.lp.utils.Converter;
 @Entity
@@ -55,7 +55,7 @@ public class Cliente {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
-	private List<Pedido> pedidos = new ArrayList<>();
+	private List<Compra> compras = new ArrayList<>();
 	
 	
 	public Cliente() {
@@ -126,16 +126,16 @@ public class Cliente {
 		return perfis.stream().map(perfil -> PerfilCliente.converterParaEnum(perfil)).collect(Collectors.toSet());
 	}
 
-	public List<Pedido> getPedidos() {
-		return pedidos;
+	public List<Compra> getCompras() {
+		return compras;
 	}
 	
 	public void adicionarPerfil(PerfilCliente perfil) {
 		this.perfis.add(perfil.getCodigo());
 	}
 	
-	public void adicionarPedido(Pedido pedido) {
-		pedidos.add(pedido);
+	public void adicionarCompra(Compra compra) {
+		compras.add(compra);
 	}
 	
 	/**

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import trabalho.lp.cliente.enums.PerfilCliente;
 import trabalho.lp.cliente.model.Cliente;
-import trabalho.lp.compra.pedido.model.Pedido;
+import trabalho.lp.compra.model.Compra;
 import trabalho.lp.utils.Converter;
 
 public class ClienteDTO {
@@ -19,7 +19,7 @@ public class ClienteDTO {
 	private Set<PerfilCliente> perfis = new HashSet<>();
 	private String dataNascimento;
 	private String telefone;
-	private List<Pedido> pedidos = new ArrayList<>();
+	private List<Compra> compras = new ArrayList<>();
 	
 	
 	public ClienteDTO(Cliente cliente) {
@@ -33,7 +33,7 @@ public class ClienteDTO {
 		}
 		
 		telefone = cliente.getTelefone();
-		pedidos = cliente.getPedidos();
+		compras = cliente.getCompras();
 	}
 
 
@@ -61,8 +61,8 @@ public class ClienteDTO {
 		return telefone;
 	}
 
-	public List<Pedido> getPedidos() {
-		return pedidos;
+	public List<Compra> getCompras() {
+		return compras;
 	}
 	
 	

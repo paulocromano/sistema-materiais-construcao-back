@@ -1,18 +1,10 @@
 package trabalho.lp.produto.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import trabalho.lp.compra.itemPedido.model.ItemPedido;
 
 @Entity
 @Table(name = "produto")
@@ -25,11 +17,7 @@ public class Produto {
 	private String descricao;
 	private Double preco;
 	private Integer estoque;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "id.produto")
-	private Set<ItemPedido> itens = new HashSet<>();
-	
+
 	
 	public Produto() {
 
