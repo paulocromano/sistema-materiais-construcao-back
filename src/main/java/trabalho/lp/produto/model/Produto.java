@@ -31,6 +31,16 @@ public class Produto {
 	private Set<ItemPedido> itens = new HashSet<>();
 	
 	
+	public Produto() {
+
+	}
+	
+	public Produto(String descricao, Double preco, Integer estoque) {
+		this.descricao = descricao;
+		this.preco = preco;
+		this.estoque = estoque;
+	}
+
 	public Long getId() {
 		return id;
 	}
