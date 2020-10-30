@@ -35,7 +35,11 @@ public class Compra {
 	@JoinColumn(name = "produto_id")
 	private Produto produto;
 	
+	
+	public Compra() {
 
+	}
+	
 	public Compra(Double preco, Integer quantidade, Cliente cliente, Produto produto) {
 		this.preco = preco;
 		this.quantidade = quantidade;
