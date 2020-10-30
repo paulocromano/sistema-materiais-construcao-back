@@ -17,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import trabalho.lp.security.JWTAuthenticationFilter;
 import trabalho.lp.security.JWTAuthorizationFilter;
@@ -26,7 +28,7 @@ import trabalho.lp.security.JWTUtil;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -40,7 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	};
 	
 	private static final String[] CAMINHOS_LIBERADOS_POST = {
-			"/cliente/**"
+			"/cliente/**",
+			"/login"
 	};
 
 	
@@ -73,6 +76,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	
 	/**
+	 * Método da Interface WebMvcConfigurer responsável por não dar erro no CORS <br>
+	 * Obs: estava dando erro ao fazer o login
+	 */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+            .allowedOrigins("*")
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+    }
+    
+	
+	/**
 	 * Método para configuração do CORS <br>
 	 * Permite o acesso a multiplas fontes com configuração básica
 	 * @return CorsConfigurationSource
@@ -80,7 +95,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	CorsConfigurationSource configurationSource() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-		corsConfiguration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+		corsConfiguration.addAllowedOrigin("*");
+		corsConfiguration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
+	
+
 		
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", corsConfiguration);
