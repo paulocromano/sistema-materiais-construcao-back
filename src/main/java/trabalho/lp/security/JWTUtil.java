@@ -22,12 +22,15 @@ public class JWTUtil {
 	
 	/**
 	 * Método responsável por gerar um Token
-	 * @param username
+	 * @param usuario : UsuarioSecurity
 	 * @return String - Token
 	 */
-	public String generateToken(String username) {
+	public String generateToken(UsuarioSecurity usuario) {
+		String permissoes = usuario.getAuthorities().toString();
+		
 		return Jwts.builder()
-				.setSubject(username)
+				.setSubject(usuario.getUsername())
+				.claim("permissoes", permissoes)
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))
 				.signWith(SignatureAlgorithm.HS512, secret.getBytes())
 				.compact();
