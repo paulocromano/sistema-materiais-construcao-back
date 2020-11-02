@@ -2,6 +2,7 @@ package trabalho.lp.compra.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import trabalho.lp.cliente.model.Cliente;
 import trabalho.lp.cliente.repository.ClienteRepository;
 import trabalho.lp.compra.dto.CompraDTO;
 import trabalho.lp.compra.form.CompraFORM;
+import trabalho.lp.compra.model.Compra;
 import trabalho.lp.compra.repository.CompraRepository;
 import trabalho.lp.exception.service.ObjectNotFoundException;
 import trabalho.lp.produto.model.Produto;
@@ -42,6 +44,18 @@ public class CompraService {
 		VerificarUsuario.usuarioTemPermissao(usuario.getId());
 		
 		return ResponseEntity.ok().body(CompraDTO.converterParaListaCompraDTO(compraRepository.findByCliente_Id(usuario.getId())));
+	}
+	
+	public ResponseEntity<Double> totalComprasCliente() {
+		UsuarioSecurity usuario = VerificarUsuario.usuarioEValido();
+		VerificarUsuario.usuarioTemPermissao(usuario.getId());
+		
+		List<Compra> comprasCliente = compraRepository.findByCliente_Id(usuario.getId());
+		
+		return ResponseEntity.ok().body(comprasCliente
+				.stream()
+				.mapToDouble(compra -> compra.getPreco() * compra.getQuantidade())
+				.sum());
 	}
 	
 	
@@ -79,17 +93,5 @@ public class CompraService {
 		}
 		
 		return estoqueRestante;
-	}
-	
-	
-	public ResponseEntity<Void> removerCompra(Long idCompra) {
-		if (idCompra == null) {
-			throw new NullPointerException("O ID da Compra não pode ser nulo!");
-		}
-		
-		VerificarUsuario.usuarioEValido();
-		compraRepository.deleteById(idCompra);
-		
-		return ResponseEntity.ok().build();
 	}
 }

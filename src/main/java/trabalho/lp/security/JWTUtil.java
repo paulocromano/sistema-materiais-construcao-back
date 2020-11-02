@@ -30,6 +30,7 @@ public class JWTUtil {
 		
 		return Jwts.builder()
 				.setSubject(usuario.getUsername())
+				.claim("id", usuario.getId())
 				.claim("permissoes", permissoes)
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))
 				.signWith(SignatureAlgorithm.HS512, secret.getBytes())

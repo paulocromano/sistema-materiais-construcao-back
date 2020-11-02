@@ -6,11 +6,12 @@ import java.util.stream.Collectors;
 import trabalho.lp.cliente.model.Cliente;
 import trabalho.lp.compra.model.Compra;
 import trabalho.lp.produto.model.Produto;
+import trabalho.lp.utils.Converter;
 
 public class CompraDTO {
 
 	private Long id;
-	private Double preco;
+	private String preco;
 	private Integer quantidade;
 	private Cliente cliente;
 	private Produto produto;
@@ -18,7 +19,7 @@ public class CompraDTO {
 	
 	public CompraDTO(Compra compra) {
 		id = compra.getId();
-		preco = compra.getPreco();
+		preco = Converter.doubleParaStringComDuasCasasDecimais(compra.getPreco());
 		quantidade = compra.getQuantidade();
 		cliente = compra.getCliente();
 		produto = compra.getProduto();
@@ -29,7 +30,7 @@ public class CompraDTO {
 		return id;
 	}
 
-	public Double getPreco() {
+	public String getPreco() {
 		return preco;
 	}
 

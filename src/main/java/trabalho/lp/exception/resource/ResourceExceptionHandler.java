@@ -48,7 +48,19 @@ public class ResourceExceptionHandler {
 	 */
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public ResponseEntity<StandardError> httpRequestMethodNotSupported(HttpRequestMethodNotSupportedException error,  HttpServletRequest request) {
-		return erroPersonalizado(error, HttpStatus.NOT_FOUND, "URL requisitada não encontrada!", request);
+		return erroPersonalizado(error, HttpStatus.BAD_REQUEST, "URL requisitada não encontrada!", request);
+	}
+	
+	
+	/**
+	 * Método responsável por tratar o erro ao tentar acessar uma URL inexistente
+	 * @param error : HttpRequestMethodNotSupportedException
+	 * @param request : HttpServletRequest
+	 * @return ResponseEntity - StandardError (Resposta com o erro personalizado)
+	 */
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<StandardError> illegalArgument(IllegalArgumentException error,  HttpServletRequest request) {
+		return erroPersonalizado(error, HttpStatus.BAD_REQUEST, "Valor inválido!", request);
 	}
 	
 	

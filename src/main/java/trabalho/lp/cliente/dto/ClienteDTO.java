@@ -1,12 +1,9 @@
 package trabalho.lp.cliente.dto;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import trabalho.lp.cliente.enums.PerfilCliente;
 import trabalho.lp.cliente.model.Cliente;
 import trabalho.lp.compra.model.Compra;
 import trabalho.lp.utils.Converter;
@@ -16,7 +13,7 @@ public class ClienteDTO {
 	private Long id; 
 	private String nome;
 	private String email;
-	private Set<PerfilCliente> perfis = new HashSet<>();
+	private String permissoes;
 	private String dataNascimento;
 	private String telefone;
 	private List<Compra> compras = new ArrayList<>();
@@ -26,7 +23,7 @@ public class ClienteDTO {
 		id = cliente.getId();
 		nome = cliente.getNome();
 		email = cliente.getEmail();
-		perfis = cliente.getPerfis();
+		permissoes = cliente.getPerfis().toString();
 		
 		if (cliente.getDataNascimento() != null) {
 			dataNascimento = Converter.localDateParaString(cliente.getDataNascimento());
@@ -49,8 +46,8 @@ public class ClienteDTO {
 		return email;
 	}
 
-	public Set<PerfilCliente> getPerfis() {
-		return perfis;
+	public String getPermissoes() {
+		return permissoes;
 	}
 
 	public String getDataNascimento() {

@@ -28,6 +28,7 @@ import trabalho.lp.cliente.repository.ClienteRepository;
 import trabalho.lp.compra.model.Compra;
 import trabalho.lp.exception.service.ObjectNotFoundException;
 import trabalho.lp.utils.Converter;
+
 @Entity
 @Table(name = "cliente")
 public class Cliente {

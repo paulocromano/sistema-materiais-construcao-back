@@ -12,12 +12,10 @@ import trabalho.lp.cliente.model.Cliente;
 
 public class ClienteFORM {
 
-	@NotNull(message = "Nome não informado!")
 	@NotEmpty(message = "O campo Nome não pode estar vazio!")
 	@Size(min = 3, max = 40, message = "O campo nome deve ter entre {min} a {max} caracteres!")
 	private String nome;
 	
-	@NotNull(message = "Email informado!")
 	@NotEmpty(message = "O campo Email não pode estar vazio!")
 	@Size(min = 3, max = 40, message = "O campo email deve ter entre {min} a {max} caracteres!")
 	@Email(regexp = "^[-a-zA-Z0-9][-.a-zA-Z0-9]*@[-.a-zA-Z0-9]+(\\.[-.a-zA-Z0-9]+)*\\.(com|edu|info|gov|int|mil|net|org|biz|name|museum|coop|aero|pro|tv|[a-zA-Z]{2})$",
