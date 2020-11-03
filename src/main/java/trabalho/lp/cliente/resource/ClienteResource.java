@@ -72,7 +72,7 @@ public class ClienteResource {
 	 */
 	@Transactional
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> atualizarCliente(@PathVariable Long id, @RequestBody @Valid AtualizarClienteFORM atualizarClienteFORM) {
+	public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable Long id, @RequestBody @Valid AtualizarClienteFORM atualizarClienteFORM) {
 		return clienteService.atualizarCliente(id, atualizarClienteFORM);
 	}
 	

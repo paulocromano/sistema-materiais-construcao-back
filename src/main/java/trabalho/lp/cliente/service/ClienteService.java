@@ -76,7 +76,7 @@ public class ClienteService {
 	 * @param atualizarClienteFORM : AtualizarClienteFORM
 	 * @return ResponseEntity - Void
 	 */
-	public ResponseEntity<Void> atualizarCliente(Long id, AtualizarClienteFORM atualizarClienteFORM) {
+	public ResponseEntity<ClienteDTO> atualizarCliente(Long id, AtualizarClienteFORM atualizarClienteFORM) {
 		VerificarUsuario.usuarioEValido();
 		
 		Optional<Cliente> cliente = clienteRepository.findById(id);
@@ -87,7 +87,7 @@ public class ClienteService {
 		
 		atualizarClienteFORM.atualizarCliente(cliente.get(), bCryptPasswordEncoder);
 		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok().body(new ClienteDTO(cliente.get()));
 	}
 	
 	

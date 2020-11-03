@@ -2,6 +2,7 @@ package trabalho.lp.produto.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,11 @@ public class ProdutoService {
 	 * @return ResponseEntity - List de ProdutoDTO
 	 */
 	public ResponseEntity<List<ProdutoDTO>> listarTodosProdutos() {
-		return ResponseEntity.ok().body(ProdutoDTO.converterParaListaProdutoDTO(produtoRepository.findAll()));
+		return ResponseEntity.ok().body(ProdutoDTO.converterParaListaProdutoDTO(
+				produtoRepository.findAll()
+				.stream()
+				.sorted((produto, outroProduto) -> produto.getDescricao().compareTo(outroProduto.getDescricao()))
+				.collect(Collectors.toList())));
 	}
 	
 	
