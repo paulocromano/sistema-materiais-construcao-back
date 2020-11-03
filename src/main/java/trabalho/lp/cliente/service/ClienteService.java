@@ -31,7 +31,7 @@ public class ClienteService {
 	
 	/**
 	 * Método responsável por listar todos os Clientes
-	 * @return ResponseEntity - List ClienteDTO
+	 * @return ResponseEntity - List de ClienteDTO
 	 */
 	public ResponseEntity<List<ClienteDTO>> listarTodosClientes() {
 		return ResponseEntity.ok().body(ClienteDTO.converterParaListaClienteDTO(clienteRepository.findAll()));
